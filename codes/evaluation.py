@@ -202,20 +202,6 @@ def chart_depth_sensitivity(out_path):
     plt.close(fig)
 
 
-def chart_mcts_time_vs_n(out_path):
-    Ns = [50, 100, 500, 1000]
-    times = [0.194, 0.216, 0.990, 1.921]
-    fig, ax = plt.subplots(figsize=(7, 4))
-    ax.plot(Ns, times, marker="o", linewidth=2)
-    ax.set_xlabel("N simulations")
-    ax.set_ylabel("Time per move (s)")
-    ax.set_title("MCTS scaling: time grows ~linearly with N")
-    ax.grid(True, alpha=0.3)
-    fig.tight_layout()
-    fig.savefig(out_path, dpi=120, bbox_inches="tight")
-    plt.close(fig)
-
-
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--quick", action="store_true",
@@ -268,9 +254,8 @@ def main():
     chart_learning_curve(lc_rows,
                          os.path.join(args.out_dir, "tree_learning_curve.png"))
     chart_depth_sensitivity(os.path.join(args.out_dir, "tree_depth_sensitivity.png"))
-    chart_mcts_time_vs_n(os.path.join(args.out_dir, "mcts_time_vs_n.png"))
     for name in ("winrate_matrix.png", "tree_learning_curve.png",
-                 "tree_depth_sensitivity.png", "mcts_time_vs_n.png"):
+                 "tree_depth_sensitivity.png"):
         print(f"  [saved] {name}")
     print(f"\nAll PNGs in: {args.out_dir}")
     return 0

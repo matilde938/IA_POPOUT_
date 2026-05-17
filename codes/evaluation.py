@@ -19,6 +19,7 @@ from decision_tree_builder import (
 )
 from popout import P1, P2
 from mcts import mcts_strategy
+from train_tree import sweep_max_depth
 
 CODES_DIR = os.path.dirname(os.path.abspath(__file__))
 DATASET_PATH = os.path.join(CODES_DIR, "popout_dataset.csv")
@@ -181,16 +182,17 @@ def chart_learning_curve(rows, out_path):
     plt.close(fig)
 
 
-def chart_depth_sensitivity(out_path):
-    depths = [3, 5, 8, 10, "None"]
-    train_acc = [0.303, 0.526, 0.876, 0.904, 0.904]
-    test_acc = [0.169, 0.157, 0.221, 0.227, 0.227]
+def chart_depth_sensitivity(out_path, depths=(3, 5, 8, 10, None), seed=0):
+    rows = sweep_max_depth(depths=depths, seed=seed)
+    depth_labels = ["None" if d is None else str(d) for d, _ in rows]
+    train_acc = [r["train_accuracy"] for _, r in rows]
+    test_acc = [r["test_accuracy"] for _, r in rows]
     fig, ax = plt.subplots(figsize=(7, 4))
-    x = list(range(len(depths)))
+    x = list(range(len(depth_labels)))
     ax.plot(x, train_acc, marker="o", label="Train", linewidth=2)
     ax.plot(x, test_acc, marker="s", label="Test", linewidth=2)
     ax.set_xticks(x)
-    ax.set_xticklabels([str(d) for d in depths])
+    ax.set_xticklabels(depth_labels)
     ax.set_xlabel("max_depth")
     ax.set_ylabel("Accuracy")
     ax.set_title("Depth sensitivity -- Tree over PopOut dataset")

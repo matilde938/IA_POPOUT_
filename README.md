@@ -93,4 +93,8 @@ python evaluation.py --quick
 ```
 
 ## Autores
+<<<<<<< HEAD
 **Grupo 7 - PL6:** Gonçalo Sousa (202403669) / Guilherme Granjo (202404328) / Matilde Alves (202403407)
+=======
+**Grupo 7 - PL6:** Gonçalo Sousa (202403669) / Guilherme Granjo (202404328) / Matilde Alves (202403407)
+>>>>>>> f1a9d41dcb194efcbbf162110acc74cb58f766ed
